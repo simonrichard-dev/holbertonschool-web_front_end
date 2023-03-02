@@ -33,7 +33,7 @@ a {
     font-size: var(--font-size-xx-large);
     font-weight: var(--font-weight-bold);
     margin: var(--section-title-margin);
-    color: var(--section-title-color)
+    color: var(--section-title-color);
 }
 
 .section-tagline {
@@ -85,8 +85,8 @@ a {
 }
 
 :root{
-    --section-title-margin: 0px
-    --section-title-color:var(--color-black)
+    --section-title-margin: 0;
+    --section-title-color: var(--color-black);
 }
 
 h1, h2, h3, h4, h5, h6 {
