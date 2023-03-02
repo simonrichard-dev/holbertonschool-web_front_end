@@ -32,10 +32,6 @@ a {
     color: color-primary;
 }
 
-.section-header-align {
-    text-align: center;
-}
-
 :root {
     --color-primary: #d73953;
     --color-black: #090909;
@@ -67,6 +63,10 @@ a {
     --line-height-small: 1.2;
     --line-height-base: 1.5;
     --line-height-big: 1.8;
+}
+
+:root {
+    --section-header-align: center
 }
 
 h1, h2, h3, h4, h5, h6 {
