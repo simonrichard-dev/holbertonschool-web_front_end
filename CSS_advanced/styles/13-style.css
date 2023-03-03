@@ -22,9 +22,12 @@ a:visited {
 
 a:hover {
     color: text-color;
-    text-decoration: overline;
-    background-color: color-light-grey
+    text-decoration: underline;
 }
+
+a:active {
+    background-color: color-light-grey;
+  }
 
 .visually-hidden {
     display: none;
