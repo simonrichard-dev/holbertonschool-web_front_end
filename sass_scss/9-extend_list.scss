@@ -1,0 +1,16 @@
+/* 9-extend_list.scss */
+$color1:#00FF00;
+$color2:#FF0000;
+$size: 12px;
+
+.info {
+    font-size: $size;
+}
+.success{
+    @extend .info;
+    color: $color1;
+}
+.warning{
+    @extend .info;
+    color: $color2;
+}
