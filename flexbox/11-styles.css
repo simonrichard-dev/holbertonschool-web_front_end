@@ -531,10 +531,10 @@
 
   .hero-article {
     background-size: 150rem 100rem;
-    background-position: 50% 0%;
+    background-position: 50% 0;
   }
 
-  .hero-article .before {
+  .hero-article::before {
     content: "";
     background: rgba(0, 0, 0, 0.8);
     position: absolute;
