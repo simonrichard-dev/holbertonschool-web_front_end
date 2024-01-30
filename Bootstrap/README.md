@@ -6,7 +6,7 @@ For this project, we will use Bootstrap 4.4 and only the CSS styling part.
 
 At the end of this project, we are expected to be able to explain to anyone, without the help of Google:
 
--Usage of Containers
--Usage of the Grid system
--Usage of Components
--Usage of Utilities
+*Usage of Containers
+*Usage of the Grid system
+*Usage of Components
+*Usage of Utilities
