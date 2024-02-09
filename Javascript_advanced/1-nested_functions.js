@@ -11,8 +11,8 @@ function outer() {
     var course= "Holberton"
     function inner() {
         alert(globalVariable + " " + course)
+        var exclamation = "!"
         function inception() {
-            var exclamation = "!"
             alert(globalVariable + " " + course + " " + exclamation)
         }
         inception();
