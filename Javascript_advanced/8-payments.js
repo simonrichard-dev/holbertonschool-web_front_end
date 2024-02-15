@@ -9,7 +9,7 @@ function processOrder(orderId, amount) {
     console.log(orderId + ' is being processed');
     let inner = processPayment(amount);
     inner();
-    console.log(orderId + 'has been fully processed');
+    console.log(orderId + ' has been fully processed');
     };
 }
 
