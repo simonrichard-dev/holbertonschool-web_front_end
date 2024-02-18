@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+    <head>
+
+        <meta charset="utf-8" />
+        <title>Task 5</title>
+        <script
+            src="https://code.jquery.com/jquery-3.7.1.slim.min.js"
+            integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8="
+            crossorigin="anonymous">
+        </script>
+        <script type="application/javascript">
+            $(document).ready(function() {
+                // Function to create family tree
+                function createFamilyTree () {
+                    $('body').append(
+                        // create table
+                        $('<table>').append(
+                            // create table head
+                            $('<thead>').append(
+                                //create table row
+                                $('<tr>').append(
+                                    $('<th>').text('Firstname'),
+                                    $('<th>').text('Lastname'),
+                                )
+                            ),
+                            // create table body
+                            $('<tbody>')
+                        )
+                    );
+                };
+
+                function addNewMember (firstName, lastName) {
+                    // create table row
+                    $('tbody').append(
+                        $('<tr>').append(
+                            $('<td>').text(firstName),
+                            $('<td>').text(lastName),
+                            $('<td>').append($('<button class="btn-styled" type="button">x</button>').css("background-color", "orange"))
+                        )
+                    );
+                };
+
+                $(document).on('click', '.btn-styled', function() {
+                    // Remove the row when delete button is clicked
+                    $(this).closest('tr').remove()
+
+                });
+
+                createFamilyTree();
+                // Adding fake table data
+                addNewMember('Guillaume', 'Salva');
+                addNewMember('Arielle', 'Snizt');
+                addNewMember('Fanette', 'Snizt');
+                addNewMember('Gerard', 'Snizt');
+                addNewMember('Victor', 'Salva');
+
+            });
+        </script>
+    </head>
+
+    <body>
+
+    </body>
+
+</html>
