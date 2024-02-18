@@ -37,7 +37,9 @@
                         $('<tr>').append(
                             $('<td>').text(firstName),
                             $('<td>').text(lastName),
-                            $('<td>').append($('<button class="btn-styled" type="button">x</button>').css("background-color", "orange"))
+                            $('<td>').text('(x)').css('background-color', 'orange').click(function() {
+                                $(this).parent().remove();
+                            }),
                         )
                     );
                 };
