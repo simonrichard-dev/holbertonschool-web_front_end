@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+    <head>
+
+        <meta charset="utf-8" />
+        <title>Task 11</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        <script type="application/javascript">
+
+            // Function to add a new row for a post
+            function addPostRow(data) {
+                // Create a paragraph element
+                var paragraph = $('<p>');
+                // Create a span element with the post information
+                var span = $('<span>').text('Post created with id ' + data.id + ', title: ' + data.title + ', author: ' + data.author);
+                // Append the span to the paragraph
+                paragraph.append(span);
+                // Append the paragraph to the body
+                $('body').append(paragraph);
+            }
+
+
+            // Function to send the form data
+            const sendForm = () => {
+                const formData = {
+                author: $('#author').val(),
+                title: $('#title').val()
+                };
+
+                $('#postForm').after('<p>About to send the query to the API</p>');
+
+                $.ajax({
+                    url: 'http://localhost:3000/posts',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(formData),
+                    success: function(data) {
+                        addPostRow(data);
+                    },
+                    error: function() {
+                        alert('Error sending the POST query');
+                    }
+                });
+            };
+
+            // Function to list posts
+            function listPosts() {
+                $.get('http://localhost:3000/posts', function(response) {
+                    // Iterate through each post and call addPostRow
+                    response.forEach(function(post) {
+                        addPostRow(post);
+                    });
+                }).fail(function() {
+                    // Display an alert if the server is unavailable
+                    alert('Server Error');
+                });
+            }
+
+            // Function to build the form
+            function buildForm() {
+                // Create the form element
+                var form = $('<form>');
+                // Create the div for the author field
+                var authorDiv = $('<div>');
+                var authorLabel = $('<label>').attr('for', 'author').text('Author');
+                var authorInput = $('<input>').attr({type: 'text', id: 'author'});
+                authorDiv.append(authorLabel, authorInput);
+                // Create the div for the title field
+                var titleDiv = $('<div>');
+                var titleLabel = $('<label>').attr('for', 'title').text('Title');
+                var titleTextarea = $('<textarea>').attr({id: 'title'});
+                titleDiv.append(titleLabel, titleTextarea);
+                // Create the submit button
+                var submitButton = $('<input>').attr({type: 'submit', value: 'Submit'});
+                // Append all elements to the form
+                form.append(authorDiv, titleDiv, submitButton);
+                // Append the form to the body
+                $('body').append(form);
+                // Event handler for form submission
+                form.submit(function(event) {
+                    event.preventDefault(); // Prevent default form submission behavior
+                    sendForm(); // Call the sendForm function
+                });
+                // Select text in input when clicking on label
+                $('label').click(function() {
+                    var inputId = $(this).attr('for');
+                    $('#' + inputId).focus().select();
+                });
+            }
+
+            // Call listPosts when the page loads
+            $(document).ready(function() {
+                buildForm();
+                listPosts();
+            });
+        </script>
+    </head>
+
+    <body>
+
+    </body>
+
+</html>
