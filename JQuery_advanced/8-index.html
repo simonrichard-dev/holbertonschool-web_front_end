@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+    <head>
+
+        <meta charset="utf-8" />
+        <title>Task 7</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        <script type="application/javascript">
+            $(document).ready(() => {
+              // Function to create the search form
+              const createSearchForm = () => {
+                const form = $('<form></form>');
+                const searchInput = $('<input>', { type: 'text', placeholder: 'Search...' });
+                const submitButton = $('<input>', { type: 'submit', value: 'Submit' });
+                const resultList = $('<ul></ul>');
+                const paginationList = $('<ul id="pagination"></ul>');
+                
+      
+                form.append(searchInput, submitButton, resultList);
+                $('body').append(form);
+                $('body').append(paginationList);
+      
+                // Event earphone for the submission button
+                submitButton.click((event) => {
+                  event.preventDefault();
+                  queryWikipedia(searchInput.val());
+                });
+              };
+      
+              // Function to add a new item to the list
+              const addNewArticle = (id, title, snippet) => {
+                const listItem = $('<li></li>');
+                const titleParagraph = $(`<p><span>${id} - </span><b>${title}</b></p>`);
+                const snippetParagraph = $(`<p>${snippet}</p>`);
+      
+                listItem.append(titleParagraph, snippetParagraph);
+                $('ul').append(listItem);
+              };
+      
+              // Function to query Wikipedia
+              const queryWikipedia = (search, offset = 0) => {
+                const requestData = {
+                  type: 'GET',
+                  action: 'query',
+                  format: 'json',
+                  list: 'search',
+                  srsearch: search,
+                  origin: '*',
+                  offset: offset,
+                };
+      
+                $.ajax({
+                  url: 'https://en.wikipedia.org/w/api.php',
+                  data: requestData,
+                  dataType: 'jsonp',
+                  success: (result) => {
+                    result.query.search.forEach((article) => {
+                      addNewArticle(article.pageid, article.title, article.snippet);
+                    });
+                    // Call buildPagination after receiving response
+                    buildPagination(result.query.searchinfo.totalhits, 10, offset);
+                  },
+                });
+              };
+      
+              const buildPagination = (numberOfItems, itemsPerPage, currentOffset) => {
+                // reset pagination
+                $('#pagination').empty();
+                // calculate total number of paages
+                const totalPages = Math.ceil(numberOfItems / itemsPerPage);
+                //loop to create pagination links
+                for (let i = 1; i <= totalPages; i++) {
+                        // Create list item for each page
+                        const pageLink = $('<li></li>').text(i);
+
+                        // Apply CSS styles
+                        pageLink.css({
+                            'cursor': 'pointer',
+                            'margin-left': '10px',
+                            'font-weight': (i === currentOffset / itemsPerPage + 1) ? 'bold' : 'normal', // Bold for the current page
+                            'display': 'inline'
+                        });
+
+                        // Click event handler
+                        pageLink.click(() => {
+                            // Calculate the offset for the clicked page
+                            const offset = (i - 1) * itemsPerPage;
+                            // Call queryWikipedia function with the right offset
+                            queryWikipedia($('input[type="text"]').val(), (i - 1) * itemsPerPage);
+                        });
+
+                        // Append list item to pagination list
+                        $('#pagination').append(pageLink);
+                    }
+                };
+              
+              createSearchForm();
+            });
+          </script>
+    </head>
+
+    <body>
+
+    </body>
+
+</html>
