@@ -46,8 +46,8 @@
                   format: 'json',
                   list: 'search',
                   srsearch: search,
-                  origin: '*',
                   sroffset: offset,
+                  origin: '*',
                 };
       
                 $.ajax({
@@ -55,6 +55,7 @@
                   data: requestData,
                   dataType: 'jsonp',
                   success: (result) => {
+                    $('ul').first().empty();
                     result.query.search.forEach((article) => {
                       addNewArticle(article.pageid, article.title, article.snippet);
                     });
@@ -65,39 +66,28 @@
               };
       
               const buildPagination = (numberOfItems, itemsPerPage, currentOffset) => {
-                // reset pagination
-                $('#pagination').empty();
-                // calculate total number of paages
+                const paginationList = $('#pagination');
+                paginationList.empty();
+
                 const totalPages = Math.ceil(numberOfItems / itemsPerPage);
-                //loop to create pagination links
-                for (let i = 1; i <= totalPages; i++) {
-                        // Create list item for each page
-                        const pageLink = $('<li></li>').text(i);
+                for (let i = 0; i < totalPages; i++) {
+                    const pageOffset = i * itemsPerPage;
+                    const pageNumber = i + 1;
+                    const pageItem = $('<li>', {
+                        text: pageNumber,
+                        click: () => queryWikipedia($('input[type="text"]').val(), pageOffset)
+                    }).css({ marginLeft: '10px', cursor: 'pointer', display: 'inline', listStyle: 'none' });
 
-                        // Apply CSS styles
-                        pageLink.css({
-                            'cursor': 'pointer',
-                            'margin-left': '10px',
-                            'font-weight': (i === currentOffset / itemsPerPage + 1) ? 'bold' : 'normal', // Bold for the current page
-                            'display': 'inline'
-                        });
-
-                        // Click event handler
-                        pageLink.click(() => {
-                            // Calculate the offset for the clicked page
-                            const offset = (i - 1) * itemsPerPage;
-                            // Call queryWikipedia function with the right offset
-                            queryWikipedia($('input[type="text"]').val(), (i - 1) * itemsPerPage);
-                        });
-
-                        // Append list item to pagination list
-                        $('#pagination').append(pageLink);
+                    if (pageOffset === currentOffset) {
+                        pageItem.addClass('current').css({ fontWeight: 'bold', color: 'red'});
+                    }
+                    paginationList.append(pageItem);
                     }
                 };
               
               createSearchForm();
             });
-          </script>
+        </script>
     </head>
 
     <body>
