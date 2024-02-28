@@ -8,9 +8,10 @@
         function setCookies() {
           const firstname = document.getElementById('firstname').value;
           const email = document.getElementById('email').value;
-          const tenDaysInSeconds = 60 * 60 * 24 * 10;
-          document.cookie = `firstname=${firstname}; max-age=${tenDaysInSeconds} ; path=/;`;
-          document.cookie = `email=${email}; ;max-age=${tenDaysInSeconds}; path=/;`;
+          const expirationDate = new Date(Date.now() + (60 * 60 * 24 * 10));
+          const expirationUTC = expirationDate.toUTCString();
+          document.cookie = `firstname=${firstname}; expires=${expirationUTC} ; path=/;`;
+          document.cookie = `email=${email}; ;expires=${expirationUTC}; path=/;`;
         }
     
         function showCookies() {
