@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>3-index</title>
+  <title>4-index</title>
   <style>
     .logout-link {
       font-weight: normal;
@@ -11,21 +11,18 @@
       font-style: italic;
     }
   </style>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@latest/dist/js.cookie.min.js"></script>
     <script type="application/javascript">
-        function setCookies() {
+        function setCookiesAndShowWelcomeMessage() {
           const firstname = document.getElementById('firstname').value;
           const email = document.getElementById('email').value;
     
-          const expirationDate = new Date();
-          expirationDate.setTime(expirationDate.getTime() + (10 * 24 * 60 * 60 * 1000));
-          const expires = `expires=${expirationDate.toUTCString()};`;
-    
-          document.cookie = `firstname=${firstname}; ${expires} path=/;`;
-          document.cookie = `email=${email}; ${expires} path=/;`;
+          Cookies.set('firstname', firstname, { expires: 10, path: '/' });
+          Cookies.set('email', email, { expires: 10, path: '/' });
     
           showWelcomeMessageOrForm();
         }
-    
+
         function showForm() {
           const welcomeMessage = document.getElementById('welcomeMessage');
           if (welcomeMessage) {
@@ -39,13 +36,13 @@
         }
     
         function deleteCookiesAndShowForm() {
-          document.cookie = 'firstname=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-          document.cookie = 'email=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+          Cookies.remove('firstname', { path: '/' });
+          Cookies.remove('email', { path: '/' });
           showForm();
         }
     
         function showWelcomeMessageOrForm() {
-          const firstname = getCookie('firstname');
+          const firstname = Cookies.get('firstname');
           if (!firstname) {
             showForm();
           } else {
@@ -64,17 +61,7 @@
             document.body.appendChild(welcomeMessage);
           }
         }
-    
-        function getCookie(name) {
-          const cookies = document.cookie.split('; ').reduce((acc, cookie) => {
-            const [key, value] = cookie.split('=');
-            acc[key] = value;
-            return acc;
-          }, {});
-    
-          return cookies[name] || '';
-        }
-    
+   
         window.onload = showWelcomeMessageOrForm;
       </script>
 </head>
@@ -84,7 +71,7 @@
     <h2>Login to the website</h2>
     <input type="text" id="firstname" placeholder="Firstname">
     <input type="text" id="email" placeholder="Email">
-    <button onclick="setCookies()">Log me in</button>
+    <button onclick="setCookiesAndShowWelcomeMessage()">Log me in</button>
   </div>
 
 
