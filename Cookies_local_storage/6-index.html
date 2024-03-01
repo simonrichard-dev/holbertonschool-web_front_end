@@ -51,8 +51,8 @@
                 p.remove();
             }
 
-            if (itemCount >= 0) {
-                const itemText = itemCount <= 1 ? "item" : "items";
+            if (itemCount > 0) {
+                const itemText = itemCount === 1 ? "item" : "items";
                 const p = document.createElement('p');
                 p.id = 'cartMessage';
                 p.textContent = `You previously had ${itemCount} ${itemText} in your cart`;
